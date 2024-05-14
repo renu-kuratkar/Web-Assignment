@@ -1,0 +1,48 @@
+body {
+    /* width: 100%;  */
+}
+
+img {
+    height: 100px;
+    width: 150px;
+    margin-top: 15px;
+    margin-left: 5px;
+}
+
+.myborder {
+
+    /* height: 100px; */
+    /* border: 2px solid red; */
+}
+
+.navi-bar {
+    background-color: cadetblue;
+    padding: 5px;
+    height: 100px;
+}
+a {
+    text-decoration: none;
+    background-color: aquamarine;
+    padding: 10px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+
+}
+
+h3 {
+    width: 15pxpx;
+    background-color: cadetblue;
+}
+
+.info {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 0.8rem;
+    text-align: justify;
+    text-indent: 50px;
+    margin-right: 50px;
+}
+
+.image1 {
+    width: 300px;
+    height: 200px;
+}
