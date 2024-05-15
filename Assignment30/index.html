@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student records</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <style>
+      #input {
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="text-center my-3">
+      <input
+        type="search"
+        size="60"
+        name=""
+        id="input"
+        placeholder="What you want to search"
+        onkeyup="findByName()"
+      />
+    </div>
+    <div id="cnt" class="text-center text-danger"></div>
+    <div class="container w-50" id="container"></div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      let studentList = [
+        { id: 1, rollno: "10", name: "Satish", marks: 83.3 },
+        { id: 2, rollno: "11", name: "Nutan", marks: 55.0 },
+        { id: 3, rollno: "12", name: "Roopal", marks: 38.2 },
+        { id: 4, rollno: "18", name: "Sahil", marks: 75.8 },
+        { id: 5, rollno: "19", name: "Anish", marks: 69.6 },
+        { id: 6, rollno: "20", name: "Jeevan", marks: 33.1 },
+        { id: 7, rollno: "21", name: "Saurav", marks: 56.4 },
+        { id: 8, rollno: "22", name: "Leena", marks: 87.5 },
+        { id: 9, rollno: "23", name: "Neelam", marks: 19.2 },
+        { id: 10, rollno: "25", name: "Ganesh", marks: 69.9 },
+        { id: 11, rollno: "27", name: "Sarika", marks: 64.2 },
+        { id: 12, rollno: "29", name: "Rohan", marks: 45.5 },
+      ];
+      let ans = localStorage.getItem("flag");
+      if (ans == null) {
+        //first time visit
+        localStorage.setItem("flag", "true");
+        localStorage.setItem("students", JSON.stringify(studentList));
+      } else {
+        //other visits
+        studentList = JSON.parse(localStorage.getItem("students"));
+      }
+
+      let ele_container = document.getElementById("container");
+      let ele_input = document.getElementById("input");
+      let ele_cnt = document.getElementById("cnt");
+      let filteredStudentList = studentList;
+      showRecords();
+      function showRecords() {
+        let html = "";
+        filteredStudentList.forEach((e, index) => {
+          html += `
+            <div class="row justify-content-center bg-primary my-2 text-white p-2">
+                <div class="col-3">${e.rollno}</div>
+                <div class="col-3">${e.name}</div>
+                <div class="col-3">${e.marks}</div>
+                <div class="col-3"><Button class="btn btn-secondary" onclick="handleDeleteClick(${e.id})">Delete </Button> </div>
+            </div>
+            `;
+        });
+        ele_container.innerHTML = html;
+        ele_cnt.innerHTML = "Total " + filteredStudentList.length + " students";
+        // console.log(html);
+      }
+      function findByName() {
+        let target = ele_input.value;
+
+        filteredStudentList = studentList.filter((e, index) =>
+          e.name.toLowerCase().startsWith(target.toLowerCase())
+        );
+        showRecords();
+      }
+      function handleDeleteClick(id) {
+        console.log("So you want to delete student having id =" + id);
+        let ans = window.confirm("Do you really want to delete the record");
+        if (ans == false) {
+        } else {
+          // delete the record
+          filteredStudentList = studentList.filter((e, index) => e.id != id);
+          studentList = filteredStudentList;
+          // accordingly update the local storage
+          localStorage.setItem("students", JSON.stringify(studentList));
+          showRecords();
+        }
+      }
+    </script>
+  </body>
+</html>
